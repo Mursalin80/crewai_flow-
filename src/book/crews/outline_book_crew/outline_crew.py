@@ -1,39 +1,35 @@
-from crewai import Agent, Crew, Process, Task ,LLM
+from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import SerperDevTool
+from icecream import ic
+
 # from langchain_openai import ChatOpenAI
 from ...types import BookOutline
+from ..llm.llms import llm_groq_llama_3 as llm
 
 
 @CrewBase
 class OutlineCrew:
     """Book Outline Crew"""
- 
-
 
     agents_config = "config/agents.yaml"
     tasks_config = "config/tasks.yaml"
-    # llm = ChatOpenAI(model="gpt-4o")
-    llm = LLM(
-    model="gemini/gemini-1.5-flash",
-    temperature=0.5
-            )
 
     @agent
-    def researcher(self) -> Agent:
+    def researcher_for_outline(self) -> Agent:
         search_tool = SerperDevTool()
         return Agent(
-            config=self.agents_config["researcher"],
+            config=self.agents_config["researcher_for_outline"],
             tools=[search_tool],
-            llm=self.llm,
+            llm=llm,
             verbose=True,
         )
 
     @agent
-    def outliner(self) -> Agent:
+    def outliner_writer(self) -> Agent:
         return Agent(
-            config=self.agents_config["outliner"],
-            llm=self.llm,
+            config=self.agents_config["outliner_writer"],
+            llm=llm,
             verbose=True,
         )
 

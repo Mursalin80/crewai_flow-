@@ -1,25 +1,26 @@
 research_chapter:
   description: >
-    Research the provided chapter topic, title, and outline to gather additional content that will be helpful in writing the chapter.
+    Research the provided for 2 chapters topic, title, and outline to gather additional content that will be helpful in writing the chapter.
     Ensure you focus on reliable, high-quality sources of information.
 
     Here is some additional information about the author's desired goal for the book and the chapter:\n\n {goal}
     Here is the outline description for the chapter:\n\n {chapter_description}
 
     When researching, consider the following key points:
-    - you need to gather enough information to write a 3,000-word chapter
+    - you need to gather enough information to write a 1500 to 2500 words for each chapter
     - The chapter you are researching needs to fit in well with the rest of the chapters in the book.
+    - Search only once to limit llm token usage and the cost. 
 
     Here is the outline of the entire book:\n\n
     {book_outline}
   expected_output: >
     A set of additional insights and information that can be used in writing the chapter.
-  agent: researcher
+  agent: researcher_for_book_chapter
 
 write_chapter:
   description: >
     Write a well-structured chapter based on the chapter title, goal, and outline description. 
-    Each chapter should be written in markdown and should contain around 3,000 words.
+    Each chapter should be written in markdown and should contain around 1,500 to 2,500 words. 
 
     Here is the topic for the book: {topic}
     Here is the title of the chapter: {chapter_title}
@@ -27,9 +28,10 @@ write_chapter:
 
     Important notes:
     - The chapter you are writing needs to fit in well with the rest of the chapters in the book.
+    - Search only once to limit llm token usage and the cost. 
 
     Here is the outline of the entire book:\n\n
     {book_outline}
   expected_output: >
     A markdown-formatted chapter of around 3,000 words that covers the provided chapter title and outline description.
-  agent: writer
+  agent: writer_for_book_chapter

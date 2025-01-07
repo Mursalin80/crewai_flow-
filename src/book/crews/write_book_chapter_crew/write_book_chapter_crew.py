@@ -1,10 +1,9 @@
-from crewai import Agent, Crew, Process, Task,LLM
+from crewai import LLM, Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import SerperDevTool
-from langchain_openai import ChatOpenAI
-
 
 from ...types import Chapter
+from ..llm.llms import llm_google_gemini as llm
 
 
 @CrewBase
@@ -13,27 +12,22 @@ class WriteBookChapterCrew:
 
     agents_config = "config/agents.yaml"
     tasks_config = "config/tasks.yaml"
-    # llm = ChatOpenAI(model="gpt-4o")
-    llm = LLM(
-    model="gemini/gemini-1.5-pro-latest",
-    temperature=0.7
-            )
 
     @agent
-    def researcher(self) -> Agent:
+    def researcher_for_book_chapter(self) -> Agent:
         search_tool = SerperDevTool()
         return Agent(
-            config=self.agents_config["researcher"],
+            config=self.agents_config["researcher_for_book_chapter"],
             tools=[search_tool],
-            llm=self.llm,
+            llm=llm,
             verbose=True,
         )
 
     @agent
-    def writer(self) -> Agent:
+    def writer_for_book_chapter(self) -> Agent:
         return Agent(
-            config=self.agents_config["writer"],
-            llm=self.llm,
+            config=self.agents_config["writer_for_book_chapter"],
+            llm=llm,
             verbose=True,
         )
 
